@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layer-list
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@android:id/background">
+        <shape>
+            <corners
+                android:radius="5dip" />
+            <!--#이부분이 배경 설정 배경에 나올 프로그래스바의 색-->
+            <gradient
+                android:startColor="#FF0000"
+                android:centerColor="#FF9900"
+                android:endColor="#FFFF00"
+                android:centerY="0.75"
+                android:angle="270" />
+        </shape>
+    </item>
+
+    <!-- 원형일 때
+    <item android:id="@android:id/secondaryProgress">
+         <clip>
+             <shape>
+                 <corners android:radius="0dip" />
+                 <gradient
+                         android:startColor="#80ffd300"
+                         android:centerColor="#80ffb600"
+                         android:centerY="0.75"
+                         android:endColor="#a0ffcb00"
+                         android:angle="270"
+                 />
+             </shape>
+         </clip>
+     </item>
+    -->
+
+    <item
+        android:id="@android:id/progress">
+        <clip>
+            <shape>
+                <corners
+                    android:radius="5dip" />
+                <!--#이부분이 앞부분 설정 위에 나올 프로그래스바의 색-->
+                <gradient
+                    android:startColor="#ff9900"
+                    android:centerColor="#ffcc00"
+                    android:endColor="#ff9900"
+                    android:centerY="0.75"
+                    android:angle="270" />
+                <stroke
+                    android:width="3dp"
+                    color="#000000" />
+                <padding
+                    android:left="10dp"
+                    android:top="10dp"
+                    android:right="10dp"
+                    android:bottom="10dp" />
+            </shape>
+        </clip>
+    </item>
+</layer-list>
