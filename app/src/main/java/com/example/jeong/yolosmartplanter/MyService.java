@@ -41,7 +41,6 @@ public class MyService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        //Toast.makeText(getApplicationContext(), "onCreate()", Toast.LENGTH_SHORT).show();
         //진동 객체 생성
         vibrator = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
 
@@ -55,18 +54,12 @@ public class MyService extends Service {
         SharedPreferences myPref=getSharedPreferences("IpAdd", MODE_PRIVATE);
         //프리퍼런스에 'ipAdd키가 있으면 이값을 읽어옴
         if(myPref.contains("ipAdd")){
-            //System.out.println("Sevice preference test value: "+myPref.getString("ipAdd", ""));
             ipAddress=myPref.getString("ipAdd","");
         }
 
         alStateAdd= "http://"+ipAddress+"/alramstate.php";
-        //System.out.println("service receive : "+alStateAdd);
-
-        //Toast.makeText(getApplicationContext(), "onStartCommand()"+num,Toast.LENGTH_SHORT).show();
-
-            con = new URLConnector(alStateAdd, true, 5000, handler);
-            con.start();    //Thread 시작
-
+        con = new URLConnector(alStateAdd, true, 5000, handler);
+        con.start();    //Thread 시작
 
         return START_STICKY;
     }
@@ -74,7 +67,6 @@ public class MyService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        //Toast.makeText(getApplicationContext(), "onDestroy()",Toast.LENGTH_SHORT).show();
         con.operate(false);
     }
 
@@ -84,9 +76,7 @@ public class MyService extends Service {
         public void handleMessage(Message msg) {
 
             if(msg.what == 0){
-
                 String result=(String)msg.obj;
-                //System.out.println(result);
 
                 ParseJSON(result);
 
@@ -124,14 +114,6 @@ public class MyService extends Service {
                 hum = json2.getString("alhum");
                 soil = json2.getString("alsoil");
                 wat = json2.getString("alwat");
-
-                /*
-                System.out.println("Service json value ");
-                System.out.println("altemp: "+ temp);
-                System.out.println("alhum: "+ hum);
-                System.out.println("alsoil: "+ soil);
-                System.out.println("alwat: "+ wat);
-                */
 
             }
             System.out.println("notificationString : \n"+notificationString(temp, hum, soil, wat));
@@ -172,14 +154,10 @@ public class MyService extends Service {
             alcheck[3]=myPref.getBoolean("AL_WAT", false);
         }
 
-        //System.out.println("notificationString Result check");
-        //System.out.println("receive check:"+str[0]+", "+str[1]+", "+str[2]+", "+str[3]);
-
         for(i=0; i<4; i++){
             num=notificationNum(alcheck,i);
             if(str[i].equals("on")&&alcheck[i]){
                 result = result + strlist[i];
-                //System.out.println("result" + i + ": " + result);
                 if(num>0)
                     result=result+", ";
             }
@@ -199,7 +177,6 @@ public class MyService extends Service {
 
     //알림 실행
     public void notificationShow(String msg){
-        //System.out.println("notification msg : "+msg);
 
         mNotificationManager= (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
 

@@ -50,14 +50,6 @@ public class URLConnectorSend extends Thread{
 
     @Override
     public void run() {
-        System.out.println("URLConnectorSend Start");
-        // send();
-        System.out.println("URLConnectorSend receive check:");
-        System.out.println("Address: "+ address);
-        System.out.println("seting: "+ seting);
-        System.out.println("soilup: "+ soilup);
-        System.out.println("soildown: "+ soildown);
-        System.out.println("watdown: "+ watdown);
         if(mode.equals("auto"))
             send();
         else if(mode.equals("alram"))
@@ -67,7 +59,6 @@ public class URLConnectorSend extends Thread{
     }
     public void send(){
         try {
-            //System.out.println(address);
 
             URL url = new URL(address +
                     "?seting=" + URLEncoder.encode(checkstate(seting), "UTF-8")
@@ -87,9 +78,7 @@ public class URLConnectorSend extends Thread{
     }
 
     public void send2(){
-        //System.out.println("send2 start");
         try {
-            //System.out.println(address);
             URL url = new URL(address +
                     "?tempup=" + URLEncoder.encode(tempup, "UTF-8")
                     + "&tempdown=" + URLEncoder.encode(tempdown, "UTF-8")
@@ -109,9 +98,7 @@ public class URLConnectorSend extends Thread{
     }
 
     public void send3(){
-        //System.out.println("send3 start");
         try {
-            //System.out.println(address);
             URL url = new URL(address +
                     "?mode=" + URLEncoder.encode(mode, "UTF-8")
                     + "&state=" + URLEncoder.encode(checkstate(state), "UTF-8")

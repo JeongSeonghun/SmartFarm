@@ -21,7 +21,6 @@ public class MainActivity extends AppCompatActivity {
 
     private TextView ttext, htext, wtext, stext;
     private ToggleButton ledtog;
-    //private ImageView pumpimg;
 
     String sensor;
     String ipAddress="192.168.240.1";
@@ -38,7 +37,6 @@ public class MainActivity extends AppCompatActivity {
         if(myPref.contains("ipAdd")){
            ipAddress= myPref.getString("ipAdd", "");
         }
-        //System.out.println(ipAddress);
 
         ttext= (TextView)findViewById(R.id.temp);       //온도
         htext= (TextView)findViewById(R.id.hum);        //습도
@@ -47,11 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
         ledtog= (ToggleButton)findViewById(R.id.ledtog);
 
-        //pumpimg= (ImageView)findViewById(R.id.pumpimg);
-
         sensor = "http://"+ipAddress+"/smartfarm.php";
-        //System.out.println(sensor);
-
 
         con = new URLConnector(sensor, true, 1000, handler);
         con.start();    //Thread 시작
@@ -91,7 +85,6 @@ public class MainActivity extends AppCompatActivity {
 
         try {
             JSONObject json = new JSONObject(target);
-
             JSONArray arr = json.getJSONArray("result");
 
             for(int i = 0; i < arr.length(); i++){
@@ -100,27 +93,13 @@ public class MainActivity extends AppCompatActivity {
                 hum = json2.getString("hum");
                 shum = json2.getString("soil");
                 wat = json2.getString("wat");
-                //pumpstate= json2.getString("pumpstate");
                 ledstate= json2.getString("ledstate");
-
-                /*
-                System.out.println(json2.getString("temp"));
-                System.out.println(json2.getString("hum"));
-                System.out.println(json2.getString("soil"));
-                System.out.println(json2.getString("wat"));
-                */
 
                 ttext.setText(temp);
                 htext.setText(hum);
                 stext.setText(shum);
                 wtext.setText(wat);
-                /*
-                if(pumpstate.equals("on")){
-                    pumpimg.setImageResource(R.drawable.waton);
-                }else if(pumpstate.equals("off")){
-                    pumpimg.setImageResource(R.drawable.watoff);
-                }
-                */
+
                 ledtog.setChecked(chboolean(ledstate));
             }
 
@@ -141,13 +120,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void ledToggClick(View view){
         String dataAdd;
-        //System.out.println("Toggel Button state : "+ledtog.isChecked());
-        //System.out.println("ledToggle Button Click");
+
         //프리퍼런스 private 모드로 오픈(현제 어플리케이션에서만 작동)
         SharedPreferences myPref=getSharedPreferences("IpAdd", MODE_PRIVATE);
         //프리퍼런스에 'ipAdd키가 있으면 이값을 읽어옴
         if(myPref.contains("ipAdd")){
-            //System.out.println("Sevice preference test value: "+myPref.getString("ipAdd", ""));
             ipAddress=myPref.getString("ipAdd","");
         }
         dataAdd= "http://"+ipAddress+"/insertstate.php";
@@ -172,7 +149,6 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences myPref=getSharedPreferences("IpAdd", MODE_PRIVATE);
         //프리퍼런스에 'ipAdd키가 있으면 이값을 읽어옴
         if(myPref.contains("ipAdd")){
-            //System.out.println("Sevice preference test value: "+myPref.getString("ipAdd", ""));
             ipAddress=myPref.getString("ipAdd","");
         }
         dataAdd= "http://"+ipAddress+"/insertstate.php";

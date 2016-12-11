@@ -47,7 +47,7 @@ public class SetActivity extends AppCompatActivity {
         if(myPref.contains("ipAdd")){
             ipAddress= myPref.getString("ipAdd", "");
         }
-        //System.out.println("seting receive: " +ipAddress);
+
         setAddress= "http://"+ipAddress+"/insertauto.php";
         alAddress= "http://"+ipAddress+"/insertalram.php";
         setAdd= "http://"+ipAddress+"/smartfarmset.php";
@@ -84,28 +84,24 @@ public class SetActivity extends AppCompatActivity {
 
         try{
             con1.join(); //서브 쓰레드가 끝날때까지 메인 쓰레드는 대기
-            //System.out.println("waiting... for result");
         }
         catch(InterruptedException e){
         }
 
         String result = con1.getResult();
 
-        //System.out.println(result);
         ParseJSON(result, "auto");
 
         con2.start();    //Thread 시작
 
         try{
             con2.join(); //서브 쓰레드가 끝날때까지 메인 쓰레드는 대기
-            //System.out.println("waiting... for result");
         }
         catch(InterruptedException e){
         }
 
         String result2 = con2.getResult();
 
-        //System.out.println(result2);
         ParseJSON(result2, "alram");
     }
 
@@ -131,11 +127,6 @@ public class SetActivity extends AppCompatActivity {
         }
         SharedPreferences myPref2= getSharedPreferences("IpAdd", MODE_PRIVATE);
         //프리퍼런스에 'ipAdd키가 있으면 이값을 읽어 에디트에 출력
-        /*
-        System.out.println("resume start");
-        System.out.println("recieve ipAddress");
-        System.out.println(myPref2.getString("ipAdd",""));
-        */
         if(myPref2.contains("ipAdd")){
             iptext.setText(myPref2.getString("ipAdd", ""));
         }
@@ -144,7 +135,6 @@ public class SetActivity extends AppCompatActivity {
     public void ipSaveBtClicked(View v){
         String ipAddress;
         ipAddress=iptext.getText().toString();
-        //System.out.println("save button start");
 
         //프리퍼런스 private 모드로 오픈(현제 어플리케이션에서만 작동)
         SharedPreferences myPref=getSharedPreferences("IpAdd", MODE_PRIVATE);
@@ -161,20 +151,10 @@ public class SetActivity extends AppCompatActivity {
         int watdown_int;
         float watdown_fl;
         seting= set_auto.isChecked();
-        //System.out.println(seting);
 
         soilup= set_soilup.getText().toString();
         soildown= set_soildown.getText().toString();
         watdown= set_watdown.getText().toString();
-        /*
-        watdown_int=Integer.valueOf(set_watdown.getText().toString());
-        //50ml-8s, 1ml-8/50
-        if(watdown_int==0)
-            watdown="1";
-        else
-            watdown=String.valueOf(watdown_int*0.16);
-        */
-        //watdown_int=Integer.valueOf(set_watdown.getText().toString());
 
         con= new URLConnectorSend(setAddress, seting, soilup, soildown, watdown, shandler);
 
@@ -231,7 +211,6 @@ public class SetActivity extends AppCompatActivity {
         con.start();
         try{
             con.join(); //서브 쓰레드가 끝날때까지 메인 쓰레드는 대기
-            //System.out.println("waiting... for result");
         }
         catch(InterruptedException e){
         }
@@ -271,14 +250,7 @@ public class SetActivity extends AppCompatActivity {
                     soildown = json2.getString("soildown");
                     watdown = json2.getString("watdown");
                     set= chboolean(json2.getString("seting"));
-                    /*값확인
-                    System.out.println(json2.getString("seting"));
-                    System.out.println(json2.getString("setsoil"));
-                    System.out.println(json2.getString("setwat"));
-                    System.out.println(json2.getString("soilup"));
-                    System.out.println(json2.getString("soildown"));
-                    System.out.println(json2.getString("watdown"));
-                    */
+
                     set_soilup.setText(soilup);
                     set_soildown.setText(soildown);
                     set_watdown.setText(watdown);
@@ -297,15 +269,7 @@ public class SetActivity extends AppCompatActivity {
                     soilup = json2.getString("soilup");
                     soildown = json2.getString("soildown");
                     watdown = json2.getString("watdown");
-                    /*값 확인
-                    System.out.println(json2.getString("tempup"));
-                    System.out.println(json2.getString("tempdown"));
-                    System.out.println(json2.getString("humup"));
-                    System.out.println(json2.getString("humdown"));
-                    System.out.println(json2.getString("soilup"));
-                    System.out.println(json2.getString("soildown"));
-                    System.out.println(json2.getString("watdown"));
-                    */
+
                     al_tempup.setText(tempup);
                     al_tempdown.setText(tempdown);
                     al_humup.setText(humup);
